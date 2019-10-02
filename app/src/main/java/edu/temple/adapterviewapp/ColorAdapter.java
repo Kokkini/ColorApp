@@ -39,10 +39,18 @@ public class ColorAdapter extends BaseAdapter {
         else {
             textView = new TextView(context);
         }
+
+
         String color = colors[i];
 
-        textView.setText(color);
 
+        if(color.equals("")){
+            color = "white";
+            textView.setText("pick a color");
+        }
+        else {
+            textView.setText(color);
+        }
         textView.setBackgroundColor(Color.parseColor(color));
 
         textView.setTextSize(22);
