@@ -1,19 +1,14 @@
 package edu.temple.adapterviewapp;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
-//import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.graphics.drawable.ColorDrawable;
+
 
 public class PaletteActivity extends AppCompatActivity {
     Spinner spinner;
@@ -24,16 +19,19 @@ public class PaletteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setTitle("Dashboard");
+        Resources res = getResources();
+        String[] colors = res.getStringArray(R.array.colors);
+        String pickColor = res.getString(R.string.pickColor);
+        final String colorMessage = res.getString(R.string.colorMessage);
+        final String noColor = colors[0].split(":")[1];
+        getSupportActionBar().setTitle(res.getString(R.string.paletteActivity));
+
 
         mainLayout = findViewById(R.id.mainLayout);
         spinner = findViewById(R.id.spinner);
 
-        String colors[] = {"", "red", "green", "blue", "cyan", "magenta", "gray", "black", "lime", "aqua", "fuchsia", "yellow", "teal"};
 
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, colors);
-
-        final ColorAdapter adapter = new ColorAdapter(this, colors);
+        final ColorAdapter adapter = new ColorAdapter(this, colors, pickColor);
 
 
 
@@ -44,10 +42,10 @@ public class PaletteActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 //                ColorDrawable color = (ColorDrawable) view.getBackground();
                 view.setBackgroundColor(Color.WHITE);
-                if (!adapter.getItem(i).equals("")){
+                if (! ((String) adapter.getItem(i)).split(":")[1].equals(noColor)){
 //                    canvasLayout.setBackgroundColor(color.getColor());
                     Intent launchActivity = new Intent(PaletteActivity.this, CanvasActivity.class);
-                    launchActivity.putExtra("COLOR", (String) adapter.getItem(i));
+                    launchActivity.putExtra(colorMessage, ((String) adapter.getItem(i)).split(":")[1]);
                     startActivity(launchActivity);
                 }
 //                mainLayout.setBackgroundColor(color.getColor());

@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">AdapterViewApp</string>
+    <string name="app_name">Color Palette</string>
+    <string name="pickColor">pick a color</string>
+    <string name="paletteActivity">Palette Activity</string>
+    <string name="canvasActivity">Canvas Activity</string>
+    <string name="defaultColor">white</string>
+    <string name="colorMessage">COLOR</string>
+    <string-array name="colors">
+        <item>none:none</item>
+        <item>red:red</item>
+        <item>green:green</item>
+        <item>blue:blue</item>
+        <item>cyan:cyan</item>
+        <item>magenta:magenta</item>
+        <item>gray:gray</item>
+        <item>black:black</item>
+        <item>lime:lime</item>
+        <item>aqua:aqua</item>
+        <item>fuchsia:fuchsia</item>
+        <item>yellow:yellow</item>
+        <item>teal:teal</item>
+    </string-array>
 </resources>

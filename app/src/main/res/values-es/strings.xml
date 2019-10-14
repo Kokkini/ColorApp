@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Paleta de Color</string>
+    <string name="pickColor">elige un color</string>
+    <string name="paletteActivity">Paleta Actividad</string>
+    <string name="canvasActivity">Lona Actividad</string>
+    <string name="defaultColor">white</string>
+    <string name="colorMessage">COLOR</string>
+    <string-array name="colors">
+        <item>none:none</item>
+        <item>rojo:red</item>
+        <item>verde:green</item>
+        <item>azul:blue</item>
+        <item>cian:cyan</item>
+        <item>magenta:magenta</item>
+        <item>gris:gray</item>
+        <item>negro:black</item>
+        <item>lima:lime</item>
+        <item>agua:aqua</item>
+        <item>fucsia:fuchsia</item>
+        <item>amarillo:yellow</item>
+        <item>verde azulado:teal</item>
+    </string-array>
+</resources>

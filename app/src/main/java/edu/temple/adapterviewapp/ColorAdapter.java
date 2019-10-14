@@ -1,6 +1,7 @@
 package edu.temple.adapterviewapp;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,19 @@ import android.widget.TextView;
 public class ColorAdapter extends BaseAdapter {
     Context context;
     String colors[];
-    public ColorAdapter(Context context, String colors[]){
+    String pickColor;
+    String noColor;
+    Resources res;
+    String defaultColor;
+
+    public ColorAdapter(Context context, String colors[], String pickColor){
         this.context = context;
         this.colors = colors;
+        this.pickColor = pickColor;
+        this.noColor = colors[0].split(":")[1];
+        this.defaultColor = context.getResources().getString(R.string.defaultColor);
     }
+
 
     @Override
     public int getCount() {
@@ -41,17 +51,18 @@ public class ColorAdapter extends BaseAdapter {
         }
 
 
-        String color = colors[i];
+        String[] color = colors[i].split(":");
 
 
-        if(color.equals("")){
-            color = "white";
-            textView.setText("pick a color");
+
+        if(color[1].equals(noColor)){
+            color[1] = defaultColor;
+            textView.setText(this.pickColor);
         }
         else {
-            textView.setText(color);
+            textView.setText(color[0]);
         }
-        textView.setBackgroundColor(Color.parseColor(color));
+        textView.setBackgroundColor(Color.parseColor(color[1]));
 
         textView.setTextSize(22);
 
