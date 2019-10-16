@@ -1,18 +1,26 @@
 package edu.temple.adapterviewapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
-public class PaletteActivity extends AppCompatActivity {
+public class PaletteActivity extends AppCompatActivity implements PaletteFragment.ColorSelectedInterface {
     Spinner spinner;
     ConstraintLayout mainLayout;
+    PaletteFragment paletteFragment;
+    ColorFragment colorFragment;
+    String noColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,42 +30,26 @@ public class PaletteActivity extends AppCompatActivity {
         Resources res = getResources();
         String[] colors = res.getStringArray(R.array.colors);
         String pickColor = res.getString(R.string.pickColor);
-        final String colorMessage = res.getString(R.string.colorMessage);
-        final String noColor = colors[0].split(":")[1];
+        noColor = colors[0].split(":")[1];
         getSupportActionBar().setTitle(res.getString(R.string.paletteActivity));
 
 
+        paletteFragment = PaletteFragment.newInstance(colors);
+        colorFragment = new ColorFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.PaletteLayout, paletteFragment).commit();
+
+        fragmentManager.beginTransaction().add(R.id.CanvasLayout, colorFragment).commit();
+
+
         mainLayout = findViewById(R.id.mainLayout);
-        spinner = findViewById(R.id.spinner);
 
+    }
 
-        final ColorAdapter adapter = new ColorAdapter(this, colors, pickColor);
-
-
-
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                ColorDrawable color = (ColorDrawable) view.getBackground();
-                view.setBackgroundColor(Color.WHITE);
-                if (! ((String) adapter.getItem(i)).split(":")[1].equals(noColor)){
-//                    canvasLayout.setBackgroundColor(color.getColor());
-                    Intent launchActivity = new Intent(PaletteActivity.this, CanvasActivity.class);
-                    launchActivity.putExtra(colorMessage, ((String) adapter.getItem(i)).split(":")[1]);
-                    startActivity(launchActivity);
-                }
-//                mainLayout.setBackgroundColor(color.getColor());
-//                Intent launchActivity = new Intent(PaletteActivity.this, CanvasActivity.class);
-//                startActivity(launchActivity);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+    @Override
+    public void colorSelected(String colorName) {
+        if (! colorName.equals(noColor)) {
+            colorFragment.messageReceived(colorName);
+        }
     }
 }
